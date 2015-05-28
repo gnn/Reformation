@@ -1,0 +1,121 @@
+logic CASL
+
+%%% HERE WITH HAVE A VERSION OF NATURALS WITH FACT AS AN EXAMPLE FUNCTION
+%%% THE SUCCESSOR FUNCTION IS DEFINED WITH DUPLICATE ARGUMENTS
+%%% THIS IS SO THAT THE VIEW TO THE GENERIC SPACE CAN WORK
+%%% SO INSTEAD OF S(X) WE WRITE S(X,X)
+spec NatSuc = 
+   sort Nat
+   sort Element
+   op canonical_element: Element
+   ops zero:Nat
+       s: Element * Nat -> Nat
+   op fact: Nat -> Nat
+   op qfact: Nat * Nat -> Nat
+   op plus : Nat * Nat -> Nat
+   op times : Nat * Nat -> Nat
+   forall x,y:Nat
+     . exists a: Nat . s(canonical_element,x) = a
+     . not (s(canonical_element,x) = zero)      %% remove this in GEN
+      . fact(zero) = s(canonical_element,zero)  %% remove this in GEN
+      . fact(s(canonical_element,x)) = times(s(canonical_element,x),fact(x))  %% remove this in GEN
+      . qfact(s(canonical_element,x),y) = times(qfact(x,s(canonical_element,x)),y) %% remove this in GEN
+      . qfact(zero,x) = x 
+      . fact(x) = qfact(x,zero)    %implied
+      . times(fact(x),y) = qfact(x,y)  %lemma required to prove this
+      . plus(zero,x) = x
+      . plus(s(canonical_element,x),y) = s(canonical_element,plus(x,y))
+      . times(zero,y) = zero  %remove this in gen
+      . times(s(canonical_element,x),y) = plus(y,times(x,y)) %remove this in gen
+end
+
+%%% HERE IS A WEAKENED VERSION WITH SOME AXIOMS REMOVED
+spec GenNatSuc = 
+   sort Nat
+   sort Element
+   op canonical_element: Element
+   ops zero:Nat
+       s: Element * Nat -> Nat
+   op fact: Nat -> Nat
+   op qfact: Nat * Nat -> Nat
+   op plus: Nat * Nat -> Nat
+   op times : Nat * Nat -> Nat
+   forall x,y:Nat    
+      . qfact(zero,x) = x 
+      . fact(x) = qfact(x,zero)    %implied
+      . times(fact(x),y) = qfact(x,y)  %lemma required to prove this
+      . times(zero,y) = zero
+end
+
+
+%%% 
+spec List = 
+  sort El
+  sort L
+     op nil:L 
+     op cons: El*L -> L
+     op app: L * L -> L
+     op rev: L -> L
+     op qrev: L * L -> L
+     forall x,y: L; h:El
+       . app(nil,x) = x
+       . app(cons(h,x),y) = cons(h,app(x,y))
+       . rev(nil) = nil
+       . rev(cons(h,x)) = app(rev(x),cons(h,nil))
+       . qrev(nil,x) = x
+       . qrev(cons(h,x),y) = qrev(x,cons(h,y))
+       . rev(x) = qrev(x,nil)  %implied
+end
+
+%%% NOW WE CREATE A GENERIC SPACE WITH NULL ELEMENT
+%%% CONSTRUCTOR ELEMENT
+%%% RECURSIVE FUNCTION
+%%% TAIL_RECURSIVE FUNCTION
+%%% AUXILIARY FUNCTION
+
+spec Gen =
+  sorts H,G
+  op null:G
+  op constructor: H * G -> G
+  op recfunc: G -> G
+  op qrecfunc: G * G -> G
+  op auxfunc: G * G -> G
+end
+
+view I1: Gen to NatSuc = 
+   H |-> Element,
+   G |-> Nat,
+   null |-> zero,
+   constructor |-> s,
+   recfunc |-> fact,
+   qrecfunc |-> qfact,
+   auxfunc |-> times
+
+view I2: Gen to List = 
+   H |-> El,
+   G |-> L,
+   null |-> nil,
+   constructor |-> cons,
+   recfunc |-> rev,
+   qrecfunc |-> qrev,
+   auxfunc |-> app
+
+view I3: Gen to GenNatSuc = 
+   H |-> Element,
+   G |-> Nat,
+   null |-> zero,
+   constructor |-> s,
+   recfunc |-> fact,
+   qrecfunc |-> qfact,
+   auxfunc |-> times
+
+%% THIS IS IMMEDIATELY INCONSISTENT
+spec colimit = combine I1,I2
+  with 
+       s |-> cons,
+       zero |-> nil
+
+spec colimit_consistent = combine I2, I3 
+   with 
+       s |-> cons,
+       zero |-> nil

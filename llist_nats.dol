@@ -1,0 +1,88 @@
+logic CASL
+
+from Basic/Numbers get Nat, Int
+from Basic/StructuredDatatypes get List
+
+spec ObjNat = 
+   sort ObjNat then
+   List[sort ObjNat] then
+   op s: List[ObjNat] * List[ObjNat] -> ObjNat
+   op zero: ObjNat
+   op __ plus __: ObjNat * ObjNat -> ObjNat
+   op __ times __: ObjNat * ObjNat -> ObjNat
+   op fact: ObjNat -> ObjNat
+   op qfact: ObjNat * ObjNat -> ObjNat
+   forall x,y:ObjNat
+     %[. zero plus y = y]%
+     %[. s([],x::[])  plus y = s([],(x plus y)::[])]%
+     %[. zero times y = zero]%
+     %[. s([],x::[]) times y = y plus (x times y)]%
+     %[. fact(zero) = s([],zero::[])]%
+     %[. fact(s([],x::[])) = s([],x::[]) times fact(x)]%
+     %[. qfact(zero,y) = y]%
+     %[. qfact(s([],x::[]),y) = qfact(x,s([],x::[]) times y)]%
+     . qfact(x,zero) = fact(x)        %implied
+     . qfact(x,y) = fact(x) times y   %implied
+     . x times y = y times x          %should bring inconsistency
+end
+
+spec ObjList[sort Elem] =
+  sort ObjList[Elem] then
+  List[sort ObjList[Elem]] then
+  List[sort Elem] then 
+  op cons: List[Elem] * List[ObjList[Elem]] -> ObjList[Elem]
+  op nil: ObjList[Elem] 
+  op __ app __: ObjList[Elem] * ObjList[Elem] -> ObjList[Elem]
+  op objrev: ObjList[Elem] -> ObjList[Elem]
+  op objqrev: ObjList[Elem] * ObjList[Elem] -> ObjList[Elem]
+  forall h:Elem; x,y:ObjList[Elem]
+  .  nil app x = x
+  .  cons(h::[],x::[]) app y = cons(h::[],(x app y)::[])
+  .  objrev(nil) = nil
+  .  objrev(cons(h::[],x::[])) = objrev(x) app cons(h::[],nil::[])
+  .  objqrev(nil,y) = y
+  .  objqrev(cons(h::[],x::[]),y) = objqrev(x,cons(h::[],y::[]))
+end
+
+spec Gen[sort Elem] = 
+  sort GenList[Elem] then
+  List[sort GenList[Elem]] then
+  List[sort Elem] then
+  op constructor: List[Elem] * List[GenList[Elem]] -> GenList[Elem]
+  op null: GenList[Elem]
+  op recfunc: GenList[Elem] -> GenList[Elem]
+  op qrecfunc: GenList[Elem] * GenList[Elem] -> GenList[Elem]
+  op auxfunc: GenList[Elem] * GenList[Elem] -> GenList[Elem]
+end
+
+spec Gen2 = Gen[sort Int]
+
+
+
+view I1: Gen[sort Elem] to ObjNat =
+     Elem |-> ObjNat,
+     List[GenList[Elem]] |-> List[ObjNat],
+     List[Elem] |-> List[ObjNat],
+     GenList[Elem] |-> ObjNat,
+     null |-> zero,
+     constructor |-> s,
+     recfunc |-> fact,
+     qrecfunc |-> qfact,
+     auxfunc |-> __ times __
+
+view I2: Gen[sort Elem] to ObjList[sort Elem] =
+     Elem |-> Elem,
+     List[GenList[Elem]] |-> List[ObjList[Elem]],
+     List[Elem] |-> List[Elem],
+     GenList[Elem] |-> ObjList[Elem],
+     null |-> nil,
+     constructor |-> cons,
+     recfunc |-> objrev,
+     qrecfunc |-> objqrev,
+     auxfunc |-> __ app __
+
+
+
+spec Colimit1 = 
+     combine Gen,I1,I2 with gn_n18 |-> metacons
+    
