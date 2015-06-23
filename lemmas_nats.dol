@@ -1,0 +1,113 @@
+logic CASL
+
+%%% HERE WITH HAVE A VERSION OF NATURALS WITH FACT AS AN EXAMPLE FUNCTION
+%%% THE SUCCESSOR FUNCTION IS DEFINED WITH DUPLICATE ARGUMENTS
+%%% THIS IS SO THAT THE VIEW TO THE GENERIC SPACE CAN WORK
+%%% SO INSTEAD OF S(X) WE WRITE S(X,X)
+spec NatSucFact = 
+   sort Nat
+   ops zero:Nat
+       s: Nat -> Nat
+   op fact: Nat -> Nat
+   op qfact: Nat * Nat -> Nat
+   op plus : Nat * Nat -> Nat
+   op times : Nat * Nat -> Nat
+   forall x,y:Nat
+     . exists a: Nat . s(x) = a
+     . not (s(x) = zero)     
+      . fact(zero) = s(zero) 
+      . fact(s(x)) = times(s(x),fact(x))  
+      . qfact(s(x),y) = times(qfact(x,s(x)),y) 
+      . qfact(zero,x) = x 
+      . fact(x) = qfact(x,s(zero))    %implied
+      . times(fact(x),y) = qfact(x,y)  %lemma required to prove this
+      . plus(zero,x) = x
+      . plus(s(x),y) = s(plus(x,y))
+      . times(zero,y) = zero  %remove this in gen
+      . times(s(x),y) = plus(y,times(x,y)) %remove this in gen
+end
+
+spec NatSucFact_Rev = 
+   sort Nat
+   ops zero:Nat
+       s: Nat -> Nat
+       canonical_element: Nat
+   op fact: Nat * Nat -> Nat
+   op qfact: Nat * Nat * Nat -> Nat
+   op plus : Nat * Nat -> Nat
+   op times : Nat * Nat -> Nat
+   forall x,y:Nat
+     . exists a: Nat . s(x) = a
+     . not (s(x) = zero)     
+      . fact(zero,canonical_element) = s(zero) 
+      . fact(s(x),canonical_element) = times(s(x),fact(x,canonical_element))  
+      . qfact(s(x),y,canonical_element) = times(qfact(x,s(x),canonical_element),y) 
+      . qfact(zero,x,canonical_element) = x 
+      . fact(x,canonical_element) = qfact(x,s(zero),canonical_element)    %implied
+      . times(fact(x,canonical_element),y) = qfact(x,y,canonical_element)  %lemma required to prove this
+      . plus(zero,x) = x
+      . plus(s(x),y) = s(plus(x,y))
+      . times(zero,y) = zero  %remove this in gen
+      . times(s(x),y) = plus(y,times(x,y)) %remove this in gen
+end
+
+
+spec NatSucExp = 
+   sort Nat
+   ops zero:Nat
+       s: Nat -> Nat
+   op exp: Nat * Nat -> Nat
+   op qexp: Nat * Nat * Nat-> Nat
+   op plus: Nat * Nat -> Nat
+   op times : Nat * Nat -> Nat
+   forall x,y,z:Nat
+     . exists a: Nat . s(x) = a
+     . not (s(x) = zero)    
+      . exp(x,zero) = s(zero) 
+      . exp(x,s(y)) = times(y,exp(x,y)) 
+      . qexp(x,zero,z) = z 
+      . qexp(x,s(y),z) = qexp(x,y,times(y,z)) 
+      . exp(x,y) = qexp(x,y,s(zero))    %implied
+      . times(exp(x,y),z) = qexp(x,y,z)  %lemma required to prove this
+      . plus(zero,x) = x
+      . plus(s(x),y) = s(plus(x,y))
+      . times(zero,y) = zero  %remove this in gen
+      . times(s(x),y) = plus(y,times(x,y)) %remove this in gen
+end
+
+
+%%% NOW WE CREATE A GENERIC SPACE WITH ZERO ELEMENT
+%%% SUCCESSOR ELEMENT
+%%% RECURSIVE FUNCTION
+%%% TAIL_RECURSIVE FUNCTION
+%%% AUXILIARY FUNCTION
+
+spec Gen =
+  sorts G
+  op zero:G
+  op successor: G -> G
+  op recfunc: G * G -> G
+  op qrecfunc: G * G * G-> G
+  op auxfunc: G * G -> G
+end
+
+view I1: Gen to NatSucFact_Rev = 
+   G |-> Nat,
+   zero |-> zero,
+   successor |-> s,
+   recfunc |-> fact,
+   qrecfunc |-> qfact,
+   auxfunc |-> times
+
+
+view I2: Gen to NatSucExp = 
+   G |-> Nat,
+   zero |-> zero,
+   successor |-> s,
+   recfunc |-> exp,
+   qrecfunc |-> qexp,
+   auxfunc |-> times
+
+
+spec colimit = combine I1, I2 
+  

@@ -21,7 +21,7 @@ spec NatSuc =
       . fact(s(canonical_element,x)) = times(s(canonical_element,x),fact(x))  %% remove this in GEN
       . qfact(s(canonical_element,x),y) = times(qfact(x,s(canonical_element,x)),y) %% remove this in GEN
       . qfact(zero,x) = x 
-      . fact(x) = qfact(x,zero)    %implied
+      . fact(x) = qfact(x,s(zero))    %implied
       . times(fact(x),y) = qfact(x,y)  %lemma required to prove this
       . plus(zero,x) = x
       . plus(s(canonical_element,x),y) = s(canonical_element,plus(x,y))
@@ -42,7 +42,7 @@ spec GenNatSuc =
    op times : Nat * Nat -> Nat
    forall x,y:Nat    
       . qfact(zero,x) = x 
-      . fact(x) = qfact(x,zero)    %implied
+      . fact(x) = qfact(x,s(zero))    %implied
       . times(fact(x),y) = qfact(x,y)  %lemma required to prove this
       . times(zero,y) = zero
 end
