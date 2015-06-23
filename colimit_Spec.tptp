@@ -1,0 +1,74 @@
+%---------------------------------------------------------------------------
+% Problem : hets_exported
+% Name    : <colimit?Spec>
+% Author  : hets
+% Status  : unknown
+% Desc    :
+% Date    : 2015-06-23 04:20:48.4324 UTC
+% Option  :
+%---------------------------------------------------------------------------
+fof(declaration0,axiom,
+    h(canonical_element)).
+fof(declaration1,axiom,
+    ! [X1, X2] : ((h(X1) & g(X2)) => g(cons(X1, X2)))).
+fof(declaration2,axiom,
+    g(nil)).
+fof(declaration3,axiom,
+    ! [X1, X2] : ((g(X1) & g(X2)) => g(plus(X1, X2)))).
+fof(declaration4,axiom,
+    ! [X1, X2] : ((g(X1) & g(X2)) => g(qrev(X1, X2)))).
+fof(declaration5,axiom,
+    ! [X1] : (g(X1) => g(rev(X1)))).
+fof(declaration6,axiom,
+    ! [X1, X2] : ((g(X1) & g(X2)) => g(times(X1, X2)))).
+fof(disjoint_sorts_g_h,axiom,
+    ! [Y1, Y2] : ((g(Y1) & h(Y2)) => ~ Y1 = Y2)).
+fof(ga_non_empty_sort_g,axiom,
+    ? [Y] : g(Y)).
+fof(ga_non_empty_sort_h,axiom,
+    ? [Y] : h(Y)).
+fof(ax1,axiom,
+    ! [X] : (g(X) => ? [A] : (g(A) & cons(canonical_element, X) = A))).
+fof(ax2,axiom,
+    ! [X] : (g(X) => ~ cons(canonical_element, X) = nil)).
+fof(ax3,axiom,
+    rev(nil) = cons(canonical_element, nil)).
+fof(ax4,axiom,
+    ! [X] : (g(X)
+             => rev(cons(canonical_element, X))
+                = times(cons(canonical_element, X), rev(X)))).
+fof(ax5,axiom,
+    ! [X, Y] : ((g(X) & g(Y))
+                => qrev(cons(canonical_element, X), Y)
+                   = times(qrev(X, cons(canonical_element, X)), Y))).
+fof(ax7,axiom,
+    ! [X] : (g(X) => rev(X) = qrev(X, nil))).
+fof(ax8,axiom,
+    ! [X, Y] : ((g(X) & g(Y)) => times(rev(X), Y) = qrev(X, Y))).
+fof(ax9,axiom,
+    ! [X] : (g(X) => plus(nil, X) = X)).
+fof(ax10,axiom,
+    ! [X, Y] : ((g(X) & g(Y))
+                => plus(cons(canonical_element, X), Y)
+                   = cons(canonical_element, plus(X, Y)))).
+fof(ax11,axiom,
+    ! [Y] : (g(Y) => times(nil, Y) = nil)).
+fof(ax12,axiom,
+    ! [X, Y] : ((g(X) & g(Y))
+                => times(cons(canonical_element, X), Y)
+                   = plus(Y, times(X, Y)))).
+fof(ax1_13,axiom,
+    ! [X] : (g(X) => times(nil, X) = X)).
+fof(ax2_14,axiom,
+    ! [X, Y, H] : ((g(X) & g(Y) & h(H))
+                   => times(cons(H, X), Y) = cons(H, times(X, Y)))).
+fof(ax3_15,axiom,
+    rev(nil) = nil).
+fof(ax4_16,axiom,
+    ! [X, H] : ((g(X) & h(H))
+                => rev(cons(H, X)) = times(rev(X), cons(H, nil)))).
+fof(ax5_17,axiom,
+    ! [X] : (g(X) => qrev(nil, X) = X)).
+fof(ax6_18,axiom,
+    ! [X, Y, H] : ((g(X) & g(Y) & h(H))
+                   => qrev(cons(H, X), Y) = qrev(X, cons(H, Y)))).

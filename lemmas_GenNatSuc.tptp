@@ -1,0 +1,37 @@
+%---------------------------------------------------------------------------
+% Problem : hets_exported
+% Name    : <lemmas?GenNatSuc>
+% Author  : hets
+% Status  : unknown
+% Desc    :
+% Date    : 2015-06-23 08:36:33.285906 UTC
+% Option  :
+%---------------------------------------------------------------------------
+fof(declaration0,axiom,
+    element(canonical_element)).
+fof(declaration1,axiom,
+    ! [X1] : (nat(X1) => nat(fact(X1)))).
+fof(declaration2,axiom,
+    ! [X1, X2] : ((nat(X1) & nat(X2)) => nat(plus(X1, X2)))).
+fof(declaration3,axiom,
+    ! [X1, X2] : ((nat(X1) & nat(X2)) => nat(qfact(X1, X2)))).
+fof(declaration4,axiom,
+    ! [X1, X2] : ((element(X1) & nat(X2)) => nat(s(X1, X2)))).
+fof(declaration5,axiom,
+    ! [X1, X2] : ((nat(X1) & nat(X2)) => nat(times(X1, X2)))).
+fof(declaration6,axiom,
+    nat(zero)).
+fof(disjoint_sorts_element_nat,axiom,
+    ! [Y1, Y2] : ((element(Y1) & nat(Y2)) => ~ Y1 = Y2)).
+fof(ga_non_empty_sort_element,axiom,
+    ? [Y] : element(Y)).
+fof(ga_non_empty_sort_nat,axiom,
+    ? [Y] : nat(Y)).
+fof(ax1,axiom,
+    ! [X] : (nat(X) => qfact(zero, X) = X)).
+fof(ax3,axiom,
+    ! [X, Y] : ((nat(X) & nat(Y)) => times(fact(X), Y) = qfact(X, Y))).
+fof(ax4,axiom,
+    ! [Y] : (nat(Y) => times(zero, Y) = zero)).
+fof(ax2,conjecture,
+    ! [X] : (nat(X) => fact(X) = qfact(X, zero))).

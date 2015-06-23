@@ -1,0 +1,50 @@
+%---------------------------------------------------------------------------
+% Problem : hets_exported
+% Name    : gn_n6
+% Author  : hets
+% Status  : unknown
+% Desc    :
+% Date    : 2015-06-23 08:36:33.391514 UTC
+% Option  :
+%---------------------------------------------------------------------------
+fof(declaration0,axiom,
+    h(canonical_element)).
+fof(declaration1,axiom,
+    ! [X1, X2] : ((g(X1) & g(X2)) => g(plus(X1, X2)))).
+fof(declaration2,axiom,
+    ! [X1, X2] : ((g(X1) & g(X2)) => g(qrev(X1, X2)))).
+fof(declaration3,axiom,
+    ! [X1] : (g(X1) => g(rev(X1)))).
+fof(declaration4,axiom,
+    ! [X1, X2] : ((h(X1) & g(X2)) => g(s(X1, X2)))).
+fof(declaration5,axiom,
+    ! [X1, X2] : ((g(X1) & g(X2)) => g(times(X1, X2)))).
+fof(declaration6,axiom,
+    g(zero)).
+fof(disjoint_sorts_g_h,axiom,
+    ! [Y1, Y2] : ((g(Y1) & h(Y2)) => ~ Y1 = Y2)).
+fof(ga_non_empty_sort_g,axiom,
+    ? [Y] : g(Y)).
+fof(ga_non_empty_sort_h,axiom,
+    ? [Y] : h(Y)).
+fof(ax1,axiom,
+    ! [X] : (g(X) => times(zero, X) = X)).
+fof(ax2,axiom,
+    ! [X, Y, H] : ((g(X) & g(Y) & h(H))
+                   => times(s(H, X), Y) = s(H, times(X, Y)))).
+fof(ax3,axiom,
+    rev(zero) = zero).
+fof(ax4,axiom,
+    ! [X, H] : ((g(X) & h(H))
+                => rev(s(H, X)) = times(rev(X), s(H, zero)))).
+fof(ax6,axiom,
+    ! [X, Y, H] : ((g(X) & g(Y) & h(H))
+                   => qrev(s(H, X), Y) = qrev(X, s(H, Y)))).
+fof(ax1_8,axiom,
+    ! [X] : (g(X) => qrev(zero, X) = X)).
+fof(ax2_9,axiom,
+    ! [X] : (g(X) => rev(X) = qrev(X, zero))).
+fof(ax3_10,axiom,
+    ! [X, Y] : ((g(X) & g(Y)) => times(rev(X), Y) = qrev(X, Y))).
+fof(ax4_11,axiom,
+    ! [Y] : (g(Y) => times(zero, Y) = zero)).

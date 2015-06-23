@@ -1,0 +1,56 @@
+cnf(declaration0_1,axiom,
+    ( h(canonical_element) )).
+
+cnf(declaration1_2,axiom,
+    ( g(cons(A,B)) | ~ g(B) | ~ h(A) )).
+
+cnf(declaration2_3,axiom,
+    ( g(nil) )).
+
+cnf(declaration3_4,axiom,
+    ( g(plus(A,B)) | ~ g(A) | ~ g(B) )).
+
+cnf(declaration4_5,axiom,
+    ( g(qrev(A,B)) | ~ g(A) | ~ g(B) )).
+
+cnf(declaration5_6,axiom,
+    ( g(rev(A)) | ~ g(A) )).
+
+cnf(declaration6_7,axiom,
+    ( g(times(A,B)) | ~ g(A) | ~ g(B) )).
+
+cnf(disjoint_sorts_g_h_8,axiom,
+    ( ~ g(A) | ~ h(B) | A != B )).
+
+cnf(ga_non_empty_sort_g_9,axiom,
+    ( g(sk1) )).
+
+cnf(ga_non_empty_sort_h_10,axiom,
+    ( h(sk2) )).
+
+cnf(ax1_11,axiom,
+    ( times(nil,A) = A | ~ g(A) )).
+
+cnf(ax2_12,axiom,
+    ( times(cons(C,A),B) = cons(C,times(A,B)) | ~ g(A) | ~ g(B) | ~ h(C) )).
+
+cnf(ax3_13,axiom,
+    ( rev(nil) = nil )).
+
+cnf(ax4_14,axiom,
+    ( rev(cons(B,A)) = times(rev(A),cons(B,nil)) | ~ g(A) | ~ h(B) )).
+
+cnf(ax6_15,axiom,
+    ( qrev(cons(C,A),B) = qrev(A,cons(C,B)) | ~ g(A) | ~ g(B) | ~ h(C) )).
+
+cnf(ax1_8_16,axiom,
+    ( qrev(nil,A) = A | ~ g(A) )).
+
+cnf(ax2_9_17,axiom,
+    ( rev(A) = qrev(A,nil) | ~ g(A) )).
+
+cnf(ax3_10_18,axiom,
+    ( times(rev(A),B) = qrev(A,B) | ~ g(A) | ~ g(B) )).
+
+cnf(ax4_11_19,axiom,
+    ( times(nil,A) = nil | ~ g(A) )).

@@ -1,0 +1,98 @@
+logic SoftFOL
+
+list_of_symbols.
+functions
+[(canonical_element, 0), (cons, 2), (nil, 0), (plus, 2), (qrev, 2),
+ (rev, 1), (times, 2)].
+sorts[g, h].
+end_of_list.
+
+list_of_declarations.
+h(canonical_element).
+forall([h(X1), g(X2)], g(cons(X1, X2))).
+g(nil).
+forall([g(X1), g(X2)], g(plus(X1, X2))).
+forall([g(X1), g(X2)], g(qrev(X1, X2))).
+forall([g(X1)], g(rev(X1))).
+forall([g(X1), g(X2)], g(times(X1, X2))).
+end_of_list.
+
+list_of_formulae(axioms).
+end_of_list.
+
+formula
+(forall([g(Y1), h(Y2)], not(equal(Y1, Y2))), disjoint_sorts_g_h).
+
+formula(exists([Y], g(Y)), ga_non_empty_sort_g).
+
+formula(exists([Y], h(Y)), ga_non_empty_sort_h).
+
+formula
+(forall
+ ([g(X)], exists([g(A)], equal(cons(canonical_element, X), A))),
+ Ax1).
+
+formula
+(forall([g(X)], not(equal(cons(canonical_element, X), nil))), Ax2).
+
+formula(equal(rev(nil), cons(canonical_element, nil)), Ax3).
+
+formula
+(forall
+ ([g(X)], equal
+          (rev(cons(canonical_element, X)),
+           times(cons(canonical_element, X), rev(X)))),
+ Ax4).
+
+formula
+(forall
+ ([g(X), g(Y)], equal
+                (qrev(cons(canonical_element, X), Y),
+                 times(qrev(X, cons(canonical_element, X)), Y))),
+ Ax5).
+
+formula(forall([g(X)], equal(rev(X), qrev(X, nil))), Ax7).
+
+formula
+(forall([g(X), g(Y)], equal(times(rev(X), Y), qrev(X, Y))), Ax8).
+
+formula(forall([g(X)], equal(plus(nil, X), X)), Ax9).
+
+formula
+(forall
+ ([g(X), g(Y)], equal
+                (plus(cons(canonical_element, X), Y),
+                 cons(canonical_element, plus(X, Y)))),
+ Ax10).
+
+formula(forall([g(Y)], equal(times(nil, Y), nil)), Ax11).
+
+formula
+(forall
+ ([g(X), g(Y)], equal
+                (times(cons(canonical_element, X), Y), plus(Y, times(X, Y)))),
+ Ax12).
+
+formula(forall([g(X)], equal(times(nil, X), X)), Ax1_13).
+
+formula
+(forall
+ ([g(X), g(Y), h(H)], equal
+                      (times(cons(H, X), Y), cons(H, times(X, Y)))),
+ Ax2_14).
+
+formula(equal(rev(nil), nil), Ax3_15).
+
+formula
+(forall
+ ([g(X), h(H)], equal
+                (rev(cons(H, X)), times(rev(X), cons(H, nil)))),
+ Ax4_16).
+
+formula(forall([g(X)], equal(qrev(nil, X), X)), Ax5_17).
+
+formula
+(forall
+ ([g(X), g(Y), h(H)], equal
+                      (qrev(cons(H, X), Y), qrev(X, cons(H, Y)))),
+ Ax6_18).

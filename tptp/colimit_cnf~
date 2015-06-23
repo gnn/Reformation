@@ -1,0 +1,83 @@
+cnf(declaration0_1,axiom,
+    ( h(canonical_element) )).
+
+cnf(declaration1_2,axiom,
+    ( g(cons(A,B)) | ~ g(B) | ~ h(A) )).
+
+cnf(declaration2_3,axiom,
+    ( g(nil) )).
+
+cnf(declaration3_4,axiom,
+    ( g(plus(A,B)) | ~ g(A) | ~ g(B) )).
+
+cnf(declaration4_5,axiom,
+    ( g(qrev(A,B)) | ~ g(A) | ~ g(B) )).
+
+cnf(declaration5_6,axiom,
+    ( g(rev(A)) | ~ g(A) )).
+
+cnf(declaration6_7,axiom,
+    ( g(times(A,B)) | ~ g(A) | ~ g(B) )).
+
+cnf(disjoint_sorts_g_h_8,axiom,
+    ( ~ g(A) | ~ h(B) | A != B )).
+
+cnf(ga_non_empty_sort_g_9,axiom,
+    ( g(sk1) )).
+
+cnf(ga_non_empty_sort_h_10,axiom,
+    ( h(sk2) )).
+
+cnf(ax1_11,axiom,
+    ( g(sk3(A)) | ~ g(A) )).
+
+cnf(ax1_12,axiom,
+    ( cons(canonical_element,A) = sk3(A) | ~ g(A) )).
+
+cnf(ax2_13,axiom,
+    ( ~ g(A) | cons(canonical_element,A) != nil )).
+
+cnf(ax3_14,axiom,
+    ( rev(nil) = cons(canonical_element,nil) )).
+
+cnf(ax4_15,axiom,
+    ( rev(cons(canonical_element,A)) = times(cons(canonical_element,A),rev(A)) | ~ g(A) )).
+
+cnf(ax5_16,axiom,
+    ( qrev(cons(canonical_element,A),B) = times(qrev(A,cons(canonical_element,A)),B) | ~ g(A) | ~ g(B) )).
+
+cnf(ax7_17,axiom,
+    ( rev(A) = qrev(A,nil) | ~ g(A) )).
+
+cnf(ax8_18,axiom,
+    ( times(rev(A),B) = qrev(A,B) | ~ g(A) | ~ g(B) )).
+
+cnf(ax9_19,axiom,
+    ( plus(nil,A) = A | ~ g(A) )).
+
+cnf(ax10_20,axiom,
+    ( plus(cons(canonical_element,A),B) = cons(canonical_element,plus(A,B)) | ~ g(A) | ~ g(B) )).
+
+cnf(ax11_21,axiom,
+    ( times(nil,A) = nil | ~ g(A) )).
+
+cnf(ax12_22,axiom,
+    ( times(cons(canonical_element,A),B) = plus(B,times(A,B)) | ~ g(A) | ~ g(B) )).
+
+cnf(ax1_13_23,axiom,
+    ( times(nil,A) = A | ~ g(A) )).
+
+cnf(ax2_14_24,axiom,
+    ( times(cons(C,A),B) = cons(C,times(A,B)) | ~ g(A) | ~ g(B) | ~ h(C) )).
+
+cnf(ax3_15_25,axiom,
+    ( rev(nil) = nil )).
+
+cnf(ax4_16_26,axiom,
+    ( rev(cons(B,A)) = times(rev(A),cons(B,nil)) | ~ g(A) | ~ h(B) )).
+
+cnf(ax5_17_27,axiom,
+    ( qrev(nil,A) = A | ~ g(A) )).
+
+cnf(ax6_18_28,axiom,
+    ( qrev(cons(C,A),B) = qrev(A,cons(C,B)) | ~ g(A) | ~ g(B) | ~ h(C) )).

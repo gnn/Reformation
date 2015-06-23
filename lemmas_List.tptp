@@ -1,0 +1,42 @@
+%---------------------------------------------------------------------------
+% Problem : hets_exported
+% Name    : <lemmas?List>
+% Author  : hets
+% Status  : unknown
+% Desc    :
+% Date    : 2015-06-23 08:36:33.288884 UTC
+% Option  :
+%---------------------------------------------------------------------------
+fof(declaration0,axiom,
+    ! [X1, X2] : ((l(X1) & l(X2)) => l(app(X1, X2)))).
+fof(declaration1,axiom,
+    ! [X1, X2] : ((el(X1) & l(X2)) => l(cons(X1, X2)))).
+fof(declaration2,axiom,
+    l(nil)).
+fof(declaration3,axiom,
+    ! [X1, X2] : ((l(X1) & l(X2)) => l(qrev(X1, X2)))).
+fof(declaration4,axiom,
+    ! [X1] : (l(X1) => l(rev(X1)))).
+fof(disjoint_sorts_el_l,axiom,
+    ! [Y1, Y2] : ((el(Y1) & l(Y2)) => ~ Y1 = Y2)).
+fof(ga_non_empty_sort_el,axiom,
+    ? [Y] : el(Y)).
+fof(ga_non_empty_sort_l,axiom,
+    ? [Y] : l(Y)).
+fof(ax1,axiom,
+    ! [X] : (l(X) => app(nil, X) = X)).
+fof(ax2,axiom,
+    ! [X, Y, H] : ((l(X) & l(Y) & el(H))
+                   => app(cons(H, X), Y) = cons(H, app(X, Y)))).
+fof(ax3,axiom,
+    rev(nil) = nil).
+fof(ax4,axiom,
+    ! [X, H] : ((l(X) & el(H))
+                => rev(cons(H, X)) = app(rev(X), cons(H, nil)))).
+fof(ax5,axiom,
+    ! [X] : (l(X) => qrev(nil, X) = X)).
+fof(ax6,axiom,
+    ! [X, Y, H] : ((l(X) & l(Y) & el(H))
+                   => qrev(cons(H, X), Y) = qrev(X, cons(H, Y)))).
+fof(ax7,conjecture,
+    ! [X] : (l(X) => rev(X) = qrev(X, nil))).

@@ -1,0 +1,56 @@
+logic CASL.FOAlg=
+
+sorts G, H
+op canonical_element : H
+op cons : H * G -> G
+op nil : G
+op plus : G * G -> G
+op qrev : G * G -> G
+op rev : G -> G
+op times : G * G -> G
+
+forall x : G . exists a : G . cons(canonical_element, x) = a
+                                                           %(Ax1)%
+
+forall x : G . not cons(canonical_element, x) = nil %(Ax2)%
+
+. rev(nil) = cons(canonical_element, nil) %(Ax3)%
+
+forall x : G
+. rev(cons(canonical_element, x))
+  = times(cons(canonical_element, x), rev(x))              %(Ax4)%
+
+forall x, y : G
+. qrev(cons(canonical_element, x), y)
+  = times(qrev(x, cons(canonical_element, x)), y)          %(Ax5)%
+
+forall x : G . rev(x) = qrev(x, nil) %(Ax7)%
+
+forall x, y : G . times(rev(x), y) = qrev(x, y) %(Ax8)%
+
+forall x : G . plus(nil, x) = x %(Ax9)%
+
+forall x, y : G
+. plus(cons(canonical_element, x), y)
+  = cons(canonical_element, plus(x, y))                   %(Ax10)%
+
+forall y : G . times(nil, y) = nil %(Ax11)%
+
+forall x, y : G
+. times(cons(canonical_element, x), y) = plus(y, times(x, y))
+                                                          %(Ax12)%
+
+forall x : G . times(nil, x) = x %(Ax1_13)%
+
+forall x, y : G; h : H
+. times(cons(h, x), y) = cons(h, times(x, y))           %(Ax2_14)%
+
+. rev(nil) = nil %(Ax3_15)%
+
+forall x : G; h : H . rev(cons(h, x)) = times(rev(x), cons(h, nil))
+                                                        %(Ax4_16)%
+
+forall x : G . qrev(nil, x) = x %(Ax5_17)%
+
+forall x, y : G; h : H . qrev(cons(h, x), y) = qrev(x, cons(h, y))
+                                                        %(Ax6_18)%

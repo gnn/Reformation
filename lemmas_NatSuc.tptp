@@ -1,0 +1,61 @@
+%---------------------------------------------------------------------------
+% Problem : hets_exported
+% Name    : <lemmas?NatSuc>
+% Author  : hets
+% Status  : unknown
+% Desc    :
+% Date    : 2015-06-23 08:36:33.311757 UTC
+% Option  :
+%---------------------------------------------------------------------------
+fof(declaration0,axiom,
+    element(canonical_element)).
+fof(declaration1,axiom,
+    ! [X1] : (nat(X1) => nat(fact(X1)))).
+fof(declaration2,axiom,
+    ! [X1, X2] : ((nat(X1) & nat(X2)) => nat(plus(X1, X2)))).
+fof(declaration3,axiom,
+    ! [X1, X2] : ((nat(X1) & nat(X2)) => nat(qfact(X1, X2)))).
+fof(declaration4,axiom,
+    ! [X1, X2] : ((element(X1) & nat(X2)) => nat(s(X1, X2)))).
+fof(declaration5,axiom,
+    ! [X1, X2] : ((nat(X1) & nat(X2)) => nat(times(X1, X2)))).
+fof(declaration6,axiom,
+    nat(zero)).
+fof(disjoint_sorts_element_nat,axiom,
+    ! [Y1, Y2] : ((element(Y1) & nat(Y2)) => ~ Y1 = Y2)).
+fof(ga_non_empty_sort_element,axiom,
+    ? [Y] : element(Y)).
+fof(ga_non_empty_sort_nat,axiom,
+    ? [Y] : nat(Y)).
+fof(ax1,axiom,
+    ! [X] : (nat(X)
+             => ? [A] : (nat(A) & s(canonical_element, X) = A))).
+fof(ax2,axiom,
+    ! [X] : (nat(X) => ~ s(canonical_element, X) = zero)).
+fof(ax3,axiom,
+    fact(zero) = s(canonical_element, zero)).
+fof(ax4,axiom,
+    ! [X] : (nat(X)
+             => fact(s(canonical_element, X))
+                = times(s(canonical_element, X), fact(X)))).
+fof(ax5,axiom,
+    ! [X, Y] : ((nat(X) & nat(Y))
+                => qfact(s(canonical_element, X), Y)
+                   = times(qfact(X, s(canonical_element, X)), Y))).
+fof(ax6,axiom,
+    ! [X] : (nat(X) => qfact(zero, X) = X)).
+fof(ax8,axiom,
+    ! [X, Y] : ((nat(X) & nat(Y)) => times(fact(X), Y) = qfact(X, Y))).
+fof(ax9,axiom,
+    ! [X] : (nat(X) => plus(zero, X) = X)).
+fof(ax10,axiom,
+    ! [X, Y] : ((nat(X) & nat(Y))
+                => plus(s(canonical_element, X), Y)
+                   = s(canonical_element, plus(X, Y)))).
+fof(ax11,axiom,
+    ! [Y] : (nat(Y) => times(zero, Y) = zero)).
+fof(ax12,axiom,
+    ! [X, Y] : ((nat(X) & nat(Y))
+                => times(s(canonical_element, X), Y) = plus(Y, times(X, Y)))).
+fof(ax7,conjecture,
+    ! [X] : (nat(X) => fact(X) = qfact(X, zero))).
