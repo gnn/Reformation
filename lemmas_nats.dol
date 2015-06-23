@@ -47,8 +47,8 @@ spec NatSucFact_Rev =
       . times(fact(x,canonical_element),y) = qfact(x,y,canonical_element)  %lemma required to prove this
       . plus(zero,x) = x
       . plus(s(x),y) = s(plus(x,y))
-      . times(zero,y) = zero  %remove this in gen
-      . times(s(x),y) = plus(y,times(x,y)) %remove this in gen
+%%      . times(zero,y) = zero  %remove this in gen
+%%      . times(s(x),y) = plus(y,times(x,y)) %remove this in gen
 end
 
 
@@ -64,15 +64,15 @@ spec NatSucExp =
      . exists a: Nat . s(x) = a
      . not (s(x) = zero)    
       . exp(x,zero) = s(zero) 
-      . exp(x,s(y)) = times(y,exp(x,y)) 
+      . exp(x,s(y)) = times(x,exp(x,y)) 
       . qexp(x,zero,z) = z 
-      . qexp(x,s(y),z) = qexp(x,y,times(y,z)) 
+      . qexp(x,s(y),z) = qexp(x,y,times(x,z)) 
       . exp(x,y) = qexp(x,y,s(zero))    %implied
 %%      . times(exp(x,y),z) = qexp(x,y,z)  %lemma required to prove this
       . plus(zero,x) = x
       . plus(s(x),y) = s(plus(x,y))
-      . times(zero,y) = zero  %remove this in gen
-      . times(s(x),y) = plus(y,times(x,y)) %remove this in gen
+%%      . times(zero,y) = zero  %remove this in gen
+%%      . times(s(x),y) = plus(y,times(x,y)) %remove this in gen
 end
 
 
