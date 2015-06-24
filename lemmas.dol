@@ -21,7 +21,7 @@ spec NatSuc =
       . fact(s(canonical_element,x)) = times(s(canonical_element,x),fact(x))  %% remove this in GEN
       . qfact(s(canonical_element,x),y) = times(qfact(x,s(canonical_element,x)),y) %% remove this in GEN
       . qfact(zero,x) = x 
-      . fact(x) = qfact(x,s(zero))    %implied
+      . fact(x) = qfact(x,s(canonical_element,zero))    %implied
       . times(fact(x),y) = qfact(x,y)  %lemma required to prove this
       . plus(zero,x) = x
       . plus(s(canonical_element,x),y) = s(canonical_element,plus(x,y))
@@ -36,13 +36,21 @@ spec GenNatSuc =
    op canonical_element: Element
    ops zero:Nat
        s: Element * Nat -> Nat
+   op s1: Element * Nat -> Nat
    op fact: Nat -> Nat
    op qfact: Nat * Nat -> Nat
+   op fact1: Nat -> Nat
+   op qfact1: Nat * Nat -> Nat
    op plus: Nat * Nat -> Nat
    op times : Nat * Nat -> Nat
    forall x,y:Nat    
+     . exists a: Nat . s(canonical_element,x) = a
+%%     . not (s1(canonical_element,x) = zero)      %% remove this in GEN
+      . fact1(zero) = s1(canonical_element,zero)  %% Using Reformation to split problematic axioms away from the comorphism
+      . fact1(s1(canonical_element,x)) = times(s1(canonical_element,x),fact1(x))  %% 
+      . qfact1(s1(canonical_element,x),y) = times(qfact1(x,s1(canonical_element,x)),y) %% 
       . qfact(zero,x) = x 
-      . fact(x) = qfact(x,s(zero))    %implied
+      . fact(x) = qfact(x,s(canonical_element,zero))    %implied
       . times(fact(x),y) = qfact(x,y)  %lemma required to prove this
       . times(zero,y) = zero
 end
