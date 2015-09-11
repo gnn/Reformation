@@ -90,7 +90,7 @@ spec Gen =
   op auxfunc: G * G -> G
 end
 
-view I1: Gen to NatSuc = 
+view I1 : Gen to NatSuc =
    H |-> Element,
    G |-> Nat,
    null |-> zero,
@@ -99,7 +99,7 @@ view I1: Gen to NatSuc =
    qrecfunc |-> qfact,
    auxfunc |-> times
 
-view I2: Gen to List = 
+view I2 : Gen to List =
    H |-> El,
    G |-> L,
    null |-> nil,
@@ -108,7 +108,7 @@ view I2: Gen to List =
    qrecfunc |-> qrev,
    auxfunc |-> app
 
-view I3: Gen to GenNatSuc = 
+view I3 : Gen to GenNatSuc =
    H |-> Element,
    G |-> Nat,
    null |-> zero,
